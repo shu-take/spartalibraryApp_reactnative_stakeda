@@ -8,11 +8,12 @@ import {
   FlatList,
   SafeAreaView,
   ListRenderItemInfo,
+  TouchableOpacity,
 } from "react-native";
 import axios from "axios";
 import { BottomNavigation, FAB } from "react-native-paper";
-import { useFocusEffect } from "@react-navigation/native";
-
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import BookShow from "./BookShow";
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -21,18 +22,17 @@ export default function BookIndex() {
   const [books, setBooks] = useState<BooksInfo[]>();
   const [isLoading, setIsLoading] = useState(false);
   const loadingView = <Text>loading</Text>;
+  // Navigation
+  const navigation = useNavigation();
 
   const getBooksInfo = async () => {
-    const apiURL = "http://localhost/api/library/book/index/12";
+    // const apiURL = "http://localhost/api/library/book/index/12";
+    const apiURL = "http://192.168.128.118/api/library/book/index/12";
     const responce = await axios.get(apiURL);
     setIsLoading(true);
     try {
       const responce = await axios.get(apiURL);
       const items = responce.data;
-      console.log(items);
-      // const retsult = items.map((item: BooksInfo) => {
-      //   const book_result =
-      // });
       setBooks(items);
     } catch (error) {
       alert(error);
@@ -51,10 +51,14 @@ export default function BookIndex() {
 
   // FlatList内で表示する部分
   const renderBookInfo = ({ item }: ListRenderItemInfo<BooksInfo>) => {
+    // const img_path = "http://localhost/" + item.book_img_path;
+    const img_path = "http://192.168.128.118/" + item.book_img_path;
     return (
-      <View>
-        <Text>{item.book_title}</Text>
-      </View>
+      <TouchableOpacity onPress={ () => { navigation.navigate("BookShow", { bookinfo:item }) } }>
+        <View style={styles.bookInfoContainer}>
+          <Image style={styles.picture} source={{ uri: img_path }} />
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -104,11 +108,21 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: "absolute",
-    right: 16,
+    right: 5,
     bottom: 16,
   },
+  bookInfoContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "black",
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 5,
+    margin: 5,
+  },
   picture: {
-    width: screenWidth * 0.8,
-    height: (screenWidth * 0.8 * 4) / 3,
+    width: screenWidth * 0.62,
+    height: (screenWidth * 0.62 * 4) / 3,
   },
 });

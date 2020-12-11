@@ -1,6 +1,6 @@
 type RootStackParamList = {
   BookIndex: undefined;
-  MainScreen: undefined;
+  BookShow: { bookinfo: BooksInfo};
 };
 
 
