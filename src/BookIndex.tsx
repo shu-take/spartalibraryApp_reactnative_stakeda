@@ -18,10 +18,13 @@ import BookShow from "./BookShow";
 const screenWidth = Dimensions.get("screen").width;
 
 export default function BookIndex() {
-  // BookAIP情報取得
+  // API情報取得
   const [books, setBooks] = useState<BooksInfo[]>();
+  const [codes, setCodes] = useState<CodesInfo[]>();
   const [isLoading, setIsLoading] = useState(false);
+  
   const loadingView = <Text>loading</Text>;
+  
   // Navigation
   const navigation = useNavigation();
 
@@ -41,11 +44,26 @@ export default function BookIndex() {
     }
   };
 
+  const getCodesInfo = async () => {
+    // const apiURL = "http://localhost/api/library/book/index/12";
+    const apiURL = "http://192.168.128.118/api/library/code/index/12";
+    setIsLoading(true);
+    try {
+      const responce = await axios.get(apiURL);
+      const items = responce.data;
+      setCodes(items);
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   //画面遷移時の処理
   useFocusEffect(
     React.useCallback(() => {
       getBooksInfo();
-      console.log(books);
+      getCodesInfo();
     }, [])
   );
 
@@ -57,6 +75,18 @@ export default function BookIndex() {
       <TouchableOpacity onPress={ () => { navigation.navigate("BookShow", { bookinfo:item }) } }>
         <View style={styles.bookInfoContainer}>
           <Image style={styles.picture} source={{ uri: img_path }} />
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderCodeInfo = ({ item }: ListRenderItemInfo<CodesInfo>) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {}}
+      >
+        <View>
+          <Text>{item.code}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -75,7 +105,18 @@ export default function BookIndex() {
     </SafeAreaView>
   );
 
-  const CodeRoute = () => <Text>Code</Text>;
+  const CodeRoute = () => (
+    <SafeAreaView style={styles.container}>
+      {isLoading ? loadingView : null}
+      <FlatList
+        data={codes}
+        renderItem={renderCodeInfo}
+        keyExtractor={(item) => `${item.code_title}`}
+      />
+    </SafeAreaView>
+  );
+
+
   const AccountRoute = () => <Text>Account</Text>;
 
   const [index, setIndex] = React.useState(0);

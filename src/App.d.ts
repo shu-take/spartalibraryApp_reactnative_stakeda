@@ -11,3 +11,10 @@ interface BooksInfo {
   book_isbn: string;
   book_img_path: string;
 }
+
+interface CodesInfo {
+  code_id: string;
+  code_title: string;
+  code_contents: string;
+  code: string;
+}
