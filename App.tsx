@@ -4,15 +4,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 
-import LoginScreen from "./src/LoginScreen";
+import BookIndex from "./src/BookIndex";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginScreen">
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Navigator initialRouteName="BookIndex">
+        <Stack.Screen name="BookIndex" component={BookIndex} />
       </Stack.Navigator>
     </NavigationContainer>
   );
