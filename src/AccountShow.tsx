@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -9,29 +9,41 @@ import {
   SafeAreaView,
   ListRenderItemInfo,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import axios from "axios";
 import { BottomNavigation, FAB } from "react-native-paper";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import BookShow from "./BookShow";
+
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { red100, white } from "react-native-paper/lib/typescript/src/styles/colors";
+
 
 const screenWidth = Dimensions.get("screen").width;
 
-export default function Main() {
+type Props = {
+  route: RouteProp<RootStackParamList, "AccountShow">;
+  navigation: StackNavigationProp<RootStackParamList, "AccountShow">;
+};
+
+export default function AccountShow({ route, navigation }: Props) {
+  const accountInfo = route.params.accountinfo;
+
   // API情報取得
   const [books, setBooks] = useState<BooksInfo[]>();
   const [codes, setCodes] = useState<CodesInfo[]>();
-  const [accounts, setAccounts] = useState<AccountsInfo[]>();
   const [isLoading, setIsLoading] = useState(false);
-  
   const loadingView = <Text>loading</Text>;
-  
   // Navigation
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
+  // console.log(accountInfo.user_id);
   const getBooksInfo = async () => {
     // const apiURL = "http://localhost/api/library/book/index/12";
-    const apiURL = "http://192.168.128.118/api/library/book/index/12";
+
+    const apiURL =
+      "http://192.168.128.118/api/library/book/index/" + accountInfo.user_id;
     const responce = await axios.get(apiURL);
     setIsLoading(true);
     try {
@@ -47,27 +59,13 @@ export default function Main() {
 
   const getCodesInfo = async () => {
     // const apiURL = "http://localhost/api/library/book/index/12";
-    const apiURL = "http://192.168.128.118/api/library/code/index/12";
+    const apiURL =
+      "http://192.168.128.118/api/library/code/index/" + accountInfo.user_id;
     setIsLoading(true);
     try {
       const responce = await axios.get(apiURL);
       const items = responce.data;
       setCodes(items);
-    } catch (error) {
-      alert(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getAccountsInfo = async () => {
-    // const apiURL = "http://localhost/api/library/book/index/12";
-    const apiURL = "http://192.168.128.118/api/library/account/index";
-    setIsLoading(true);
-    try {
-      const responce = await axios.get(apiURL);
-      const items = responce.data;
-      setAccounts(items);
     } catch (error) {
       alert(error);
     } finally {
@@ -81,7 +79,6 @@ export default function Main() {
     React.useCallback(() => {
       getBooksInfo();
       getCodesInfo();
-      getAccountsInfo();
     }, [])
   );
 
@@ -90,7 +87,11 @@ export default function Main() {
     // const img_path = "http://localhost/" + item.book_img_path;
     const img_path = "http://192.168.128.118/" + item.book_img_path;
     return (
-      <TouchableOpacity onPress={ () => { navigation.navigate("BookShow", { bookinfo:item }) } }>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("BookShow", { bookinfo: item });
+        }}
+      >
         <View style={styles.bookInfoContainer}>
           <Image style={styles.picture} source={{ uri: img_path }} />
         </View>
@@ -100,23 +101,13 @@ export default function Main() {
 
   const renderCodeInfo = ({ item }: ListRenderItemInfo<CodesInfo>) => {
     return (
-      <TouchableOpacity onPress={() => { navigation.navigate("CodeShow", { codeinfo: item }) }}>
-        <View style={styles.codeInfoContainer}>
-          <Text style={styles.codeTitle}>{item.code_title}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderAccountInfo = ({ item }: ListRenderItemInfo<AccountsInfo>) => {
-    return (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("AccountShow", { accountinfo: item });
+          navigation.navigate("CodeShow", { codeinfo: item });
         }}
       >
-        <View style={styles.accountInfoContainer}>
-          <Text style={styles.accountTitle}>{item.user_name}</Text>
+        <View style={styles.codeInfoContainer}>
+          <Text style={styles.codeTitle}>{item.code_title}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -126,7 +117,6 @@ export default function Main() {
   const BookRoute = () => (
     <SafeAreaView style={styles.container}>
       {isLoading ? loadingView : null}
-      <FAB style={styles.addButton} icon="plus" onPress={() => {}} />
       <FlatList
         data={books}
         renderItem={renderBookInfo}
@@ -146,28 +136,15 @@ export default function Main() {
     </SafeAreaView>
   );
 
-  const AccountRoute = () => (
-    <SafeAreaView style={styles.container}>
-      {isLoading ? loadingView : null}
-      <FlatList
-        data={accounts}
-        renderItem={renderAccountInfo}
-        keyExtractor={(item) => `${item.user_id}`}
-      />
-    </SafeAreaView>
-  );
-
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "book", title: "Book", icon: "book" },
     { key: "code", title: "Code", icon: "note" },
-    { key: "account", title: "Account", icon: "account" },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     book: BookRoute,
     code: CodeRoute,
-    account: AccountRoute,
   });
 
   return (
