@@ -27,24 +27,32 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "CodeShow">;
 };
 
-export default function CodeShow({ route, navigation }: Props) {
+export default function CodeShow({ route }: Props) {
   const codeInfo = route.params.codeinfo;
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.leftcontainer}>
+      {/* <View style={styles.leftcontainer}>
         <Text style={styles.codeTitle}>CodeTitle : {codeInfo.code_title}</Text>
         <Text style={styles.codeContents}>
           CodeContents : {codeInfo.code_contents}
         </Text>
-        <Text style={styles.codeContents}>
-          BookTitle :
-        </Text>
-        <Text style={styles.codeContents}>
-          「 {codeInfo.code_book}」
-        </Text>
-      </View>
+        <Text style={styles.codeContents}>BookTitle :</Text>
+        <Text style={styles.codeContents}>「 {codeInfo.code_book}」</Text>
+      </View> */}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.codeMain}>{codeInfo.code}</Text>
+        <View style={styles.contentsContainer}>
+          <Text style={styles.codeTitle}>CodeTitle :</Text>
+          <Text style={styles.codeTitle}>{codeInfo.code_title}</Text>
+          <Text style={styles.codeContents}>
+            CodeContents : {codeInfo.code_contents}
+          </Text>
+          <Text style={styles.codeContents}>{codeInfo.code_contents}</Text>
+          <Text style={styles.codeContents}>BookTitle :</Text>
+          <Text style={styles.codeContents}>「 {codeInfo.code_book}」</Text>
+        </View>
+        <View style={styles.codeContainer}>
+          <Text style={styles.codeMain}>{codeInfo.code}</Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -56,7 +64,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  leftcontainer: {
+  contentsContainer: {
+    justifyContent: "flex-start",
+  },
+  codeContainer: {
     justifyContent: "flex-start",
   },
   scrollContainer: {
@@ -75,12 +86,12 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   codeTitle: {
-    fontSize: 20,
+    fontSize: 16,
     margin: 5,
     justifyContent: "flex-start",
   },
   codeContents: {
-    fontSize: 20,
+    fontSize: 16,
     margin: 5,
   },
   codeMain: {
