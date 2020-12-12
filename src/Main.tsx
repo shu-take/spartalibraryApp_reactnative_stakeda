@@ -13,7 +13,6 @@ import {
 import axios from "axios";
 import { BottomNavigation, FAB } from "react-native-paper";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import BookShow from "./BookShow";
 
 const screenWidth = Dimensions.get("screen").width;
 

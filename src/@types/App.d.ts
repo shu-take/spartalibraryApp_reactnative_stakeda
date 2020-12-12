@@ -26,3 +26,7 @@ interface AccountsInfo {
   user_name: string;
   user_email: string;
 }
+
+declare module "react-native-syntax-highlighter";
+declare module "react-syntax-highlighter/dist/esm/styles/hljs";
+// declare module "react-syntax-highlighter/dist/esm/styles/prism";
