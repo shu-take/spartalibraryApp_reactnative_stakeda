@@ -1,6 +1,7 @@
 type RootStackParamList = {
-  BookIndex: undefined;
-  BookShow: { bookinfo: BooksInfo};
+  Spartalibrary: undefined;
+  BookShow: { bookinfo: BooksInfo };
+  CodeShow: { codeinfo: CodesInfo };
 };
 
 
@@ -17,4 +18,5 @@ interface CodesInfo {
   code_title: string;
   code_contents: string;
   code: string;
+  code_book: string;
 }

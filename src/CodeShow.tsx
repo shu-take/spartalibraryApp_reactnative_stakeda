@@ -17,27 +17,34 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { white } from "react-native-paper/lib/typescript/src/styles/colors";
 
 
 const screenWidth = Dimensions.get("screen").width;
 
 type Props = {
-  route: RouteProp<RootStackParamList, "BookShow">;
-  navigation: StackNavigationProp<RootStackParamList, "BookShow">;
+  route: RouteProp<RootStackParamList, "CodeShow">;
+  navigation: StackNavigationProp<RootStackParamList, "CodeShow">;
 };
 
-export default function BookShow({ route, navigation}: Props) {
-  const bookInfo = route.params.bookinfo;
-  // const img_path = "http://localhost/" + item.book_img_path;
-  const img_path = "http://192.168.128.118/" + bookInfo.book_img_path;
-
+export default function CodeShow({ route, navigation }: Props) {
+  const codeInfo = route.params.codeinfo;
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.leftcontainer}>
+        <Text style={styles.codeTitle}>CodeTitle : {codeInfo.code_title}</Text>
+        <Text style={styles.codeContents}>
+          CodeContents : {codeInfo.code_contents}
+        </Text>
+        <Text style={styles.codeContents}>
+          BookTitle :
+        </Text>
+        <Text style={styles.codeContents}>
+          「 {codeInfo.code_book}」
+        </Text>
+      </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.bookTitle}>{bookInfo.book_title}</Text>
-        <Image style={styles.picture} source={{ uri: img_path }} />
-        <Text style={styles.bookContents}>{bookInfo.book_contents}</Text>
-        <Text style={styles.bookContents}>ISBN:{bookInfo.book_isbn}</Text>
+        <Text style={styles.codeMain}>{codeInfo.code}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -48,6 +55,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  leftcontainer: {
+    justifyContent: "flex-start",
   },
   scrollContainer: {
     flexGrow: 1,
@@ -64,12 +74,17 @@ const styles = StyleSheet.create({
     height: (screenWidth * 0.62 * 4) / 3,
     margin: 5,
   },
-  bookTitle: {
+  codeTitle: {
+    fontSize: 20,
+    margin: 5,
+    justifyContent: "flex-start",
+  },
+  codeContents: {
     fontSize: 20,
     margin: 5,
   },
-  bookContents: {
-    fontSize: 20,
+  codeMain: {
+    fontSize: 15,
     margin: 5,
   },
 });

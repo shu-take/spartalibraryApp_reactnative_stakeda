@@ -17,7 +17,7 @@ import BookShow from "./BookShow";
 
 const screenWidth = Dimensions.get("screen").width;
 
-export default function BookIndex() {
+export default function Main() {
   // API情報取得
   const [books, setBooks] = useState<BooksInfo[]>();
   const [codes, setCodes] = useState<CodesInfo[]>();
@@ -82,11 +82,9 @@ export default function BookIndex() {
 
   const renderCodeInfo = ({ item }: ListRenderItemInfo<CodesInfo>) => {
     return (
-      <TouchableOpacity
-        onPress={() => {}}
-      >
-        <View>
-          <Text>{item.code}</Text>
+      <TouchableOpacity onPress={() => { navigation.navigate("CodeShow", { codeinfo: item }); }}>
+        <View style={styles.codeInfoContainer}>
+          <Text style={styles.codeTitle}>{item.code_title}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -100,7 +98,7 @@ export default function BookIndex() {
       <FlatList
         data={books}
         renderItem={renderBookInfo}
-        keyExtractor={(item) => `${item.book_title}`}
+        keyExtractor={(item) => `${item.book_id}`}
       />
     </SafeAreaView>
   );
@@ -111,7 +109,7 @@ export default function BookIndex() {
       <FlatList
         data={codes}
         renderItem={renderCodeInfo}
-        keyExtractor={(item) => `${item.code_title}`}
+        keyExtractor={(item) => `${item.code_id}`}
       />
     </SafeAreaView>
   );
@@ -165,5 +163,19 @@ const styles = StyleSheet.create({
   picture: {
     width: screenWidth * 0.62,
     height: (screenWidth * 0.62 * 4) / 3,
+  },
+  codeInfoContainer: {
+    flex: 1,
+    justifyContent: "center",
+    // alignItems: "center",
+    borderColor: "black",
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 5,
+    margin: 5,
+    width: screenWidth * 0.9,
+  },
+  codeTitle: {
+    fontSize:17,
   },
 });
