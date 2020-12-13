@@ -51,14 +51,13 @@ export default function CodeShow({ route }: Props) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.contentsContainer}>
-          <Text style={styles.codeTitle}>CodeTitle :</Text>
+          <Text style={styles.codeTitle}>【CodeTitle】</Text>
           <Text style={styles.codeTitle}>{codeInfo.code_title}</Text>
-          <Text style={styles.codeContents}>
-            CodeContents : {codeInfo.code_contents}
-          </Text>
+          <Text style={styles.codeContents}>【CodeContents】</Text>
           <Text style={styles.codeContents}>{codeInfo.code_contents}</Text>
-          <Text style={styles.codeContents}>BookTitle :</Text>
-          <Text style={styles.codeContents}>「 {codeInfo.code_book}」</Text>
+          <Text style={styles.codeContents}>【BookTitle】</Text>
+          <Text style={styles.codeContents}>{codeInfo.code_book}</Text>
+          <Text style={styles.codeContents}>【Code】</Text>
           <Component />
         </View>
       </ScrollView>
