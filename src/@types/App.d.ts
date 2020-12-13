@@ -1,6 +1,8 @@
 type RootStackParamList = {
   Spartalibrary: undefined;
   BookShow: { bookinfo: BooksInfo };
+  BookAdd: undefined;
+  BookAddConfirm: { isbninfo: IsbnInfo };
   CodeShow: { codeinfo: CodesInfo };
   AccountShow: { accountinfo: AccountsInfo };
 };
@@ -26,3 +28,21 @@ interface AccountsInfo {
   user_name: string;
   user_email: string;
 }
+
+interface IsbnInfo {
+  isbn: string;
+}
+
+interface BookAddInfo {
+  book_id: string;
+  contents: string;
+  title: string;
+  isbn: string;
+  img_url: string;
+  img_path: string;
+  error: string;
+}
+
+declare module "react-native-syntax-highlighter";
+declare module "react-syntax-highlighter/dist/esm/styles/hljs";
+// declare module "react-syntax-highlighter/dist/esm/styles/prism";

@@ -19,6 +19,11 @@ import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { white } from "react-native-paper/lib/typescript/src/styles/colors";
 
+import SyntaxHighlighter from "react-native-syntax-highlighter";
+import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+
+// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+// import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -27,18 +32,23 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "CodeShow">;
 };
 
+
 export default function CodeShow({ route }: Props) {
   const codeInfo = route.params.codeinfo;
+  
+  const Component = () => {
+    const codeString = "(num) => num + 1";
+    return (
+      <SyntaxHighlighter language="javascript" style={docco}>
+        {/* {codeString} */}
+        {codeInfo.code}
+      </SyntaxHighlighter>
+    );
+  };
+  
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* <View style={styles.leftcontainer}>
-        <Text style={styles.codeTitle}>CodeTitle : {codeInfo.code_title}</Text>
-        <Text style={styles.codeContents}>
-          CodeContents : {codeInfo.code_contents}
-        </Text>
-        <Text style={styles.codeContents}>BookTitle :</Text>
-        <Text style={styles.codeContents}>「 {codeInfo.code_book}」</Text>
-      </View> */}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.contentsContainer}>
           <Text style={styles.codeTitle}>CodeTitle :</Text>
@@ -49,9 +59,7 @@ export default function CodeShow({ route }: Props) {
           <Text style={styles.codeContents}>{codeInfo.code_contents}</Text>
           <Text style={styles.codeContents}>BookTitle :</Text>
           <Text style={styles.codeContents}>「 {codeInfo.code_book}」</Text>
-        </View>
-        <View style={styles.codeContainer}>
-          <Text style={styles.codeMain}>{codeInfo.code}</Text>
+          <Component />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -69,6 +77,7 @@ const styles = StyleSheet.create({
   },
   codeContainer: {
     justifyContent: "flex-start",
+    backgroundColor: "black",
   },
   scrollContainer: {
     flexGrow: 1,
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 5,
     margin: 5,
-    width: screenWidth * 0.9,
+    width: screenWidth*0.9,
   },
   picture: {
     width: screenWidth * 0.62,

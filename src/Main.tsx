@@ -13,7 +13,6 @@ import {
 import axios from "axios";
 import { BottomNavigation, FAB } from "react-native-paper";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import BookShow from "./BookShow";
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -75,7 +74,6 @@ export default function Main() {
     }
   };
 
-
   //画面遷移時の処理
   useFocusEffect(
     React.useCallback(() => {
@@ -122,11 +120,15 @@ export default function Main() {
     );
   };
 
+
+
   // ButtonNavigationの表示
+
+
   const BookRoute = () => (
     <SafeAreaView style={styles.container}>
       {isLoading ? loadingView : null}
-      <FAB style={styles.addButton} icon="plus" onPress={() => {}} />
+      <FAB style={styles.addButton} icon="plus" onPress={() => {navigation.navigate("BookAdd")}} />
       <FlatList
         data={books}
         renderItem={renderBookInfo}
