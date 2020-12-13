@@ -74,7 +74,6 @@ export default function Main() {
     }
   };
 
-
   //画面遷移時の処理
   useFocusEffect(
     React.useCallback(() => {
@@ -121,11 +120,15 @@ export default function Main() {
     );
   };
 
+
+
   // ButtonNavigationの表示
+
+
   const BookRoute = () => (
     <SafeAreaView style={styles.container}>
       {isLoading ? loadingView : null}
-      <FAB style={styles.addButton} icon="plus" onPress={() => {}} />
+      <FAB style={styles.addButton} icon="plus" onPress={() => {navigation.navigate("BookAdd")}} />
       <FlatList
         data={books}
         renderItem={renderBookInfo}
