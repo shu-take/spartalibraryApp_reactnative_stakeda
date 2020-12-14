@@ -1,23 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
-  View,
   Text,
   Image,
   Dimensions,
-  FlatList,
   SafeAreaView,
-  ListRenderItemInfo,
-  TouchableOpacity,
   ScrollView,
 } from "react-native";
-import axios from "axios";
-import { BottomNavigation, FAB } from "react-native-paper";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-
 
 const screenWidth = Dimensions.get("screen").width;
 
