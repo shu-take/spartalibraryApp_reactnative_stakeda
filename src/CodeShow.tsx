@@ -1,29 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
   Text,
-  Image,
   Dimensions,
-  FlatList,
   SafeAreaView,
-  ListRenderItemInfo,
-  TouchableOpacity,
   ScrollView,
 } from "react-native";
-import axios from "axios";
-import { BottomNavigation, FAB } from "react-native-paper";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { white } from "react-native-paper/lib/typescript/src/styles/colors";
-
 import SyntaxHighlighter from "react-native-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-
-// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-// import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -32,21 +19,17 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "CodeShow">;
 };
 
-
 export default function CodeShow({ route }: Props) {
   const codeInfo = route.params.codeinfo;
   
   const Component = () => {
-    const codeString = "(num) => num + 1";
     return (
       <SyntaxHighlighter language="javascript" style={docco}>
-        {/* {codeString} */}
         {codeInfo.code}
       </SyntaxHighlighter>
     );
   };
   
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>

@@ -1,20 +1,15 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  View,
   Text,
   Image,
   Dimensions,
-  FlatList,
   SafeAreaView,
-  ListRenderItemInfo,
-  TouchableOpacity,
   ScrollView,
 } from "react-native";
 import axios from "axios";
-import { BottomNavigation, FAB, Button } from "react-native-paper";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-
+import { Button } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 
@@ -54,10 +49,6 @@ export default function BookAddConfirm({ route, navigation }: Props) {
     React.useCallback(() => {
       getAddBookInfo();
     }, [])
-  );
-
-  const test = () => (
-    navigation.navigate("Spartalibrary")
   );
 
   const storeBookInfo = async () => {
@@ -122,9 +113,6 @@ export default function BookAddConfirm({ route, navigation }: Props) {
   const errorView = (
     <Text style={styles.bookContents}>無効なISBNです</Text>
   );
-
-
-
 
   return (
     <SafeAreaView style={styles.container}>

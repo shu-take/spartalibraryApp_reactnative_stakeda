@@ -9,16 +9,13 @@ import {
   SafeAreaView,
   ListRenderItemInfo,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
 import axios from "axios";
-import { BottomNavigation, FAB } from "react-native-paper";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { BottomNavigation} from "react-native-paper";
+import { useFocusEffect} from "@react-navigation/native";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { red100, white } from "react-native-paper/lib/typescript/src/styles/colors";
-
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -35,13 +32,9 @@ export default function AccountShow({ route, navigation }: Props) {
   const [codes, setCodes] = useState<CodesInfo[]>();
   const [isLoading, setIsLoading] = useState(false);
   const loadingView = <Text>loading</Text>;
-  // Navigation
-  // const navigation = useNavigation();
 
-  // console.log(accountInfo.user_id);
   const getBooksInfo = async () => {
     // const apiURL = "http://localhost/api/library/book/index/12";
-
     const apiURL =
       "http://192.168.128.118/api/library/book/index/" + accountInfo.user_id;
     const responce = await axios.get(apiURL);
@@ -72,7 +65,6 @@ export default function AccountShow({ route, navigation }: Props) {
       setIsLoading(false);
     }
   };
-
 
   //画面遷移時の処理
   useFocusEffect(

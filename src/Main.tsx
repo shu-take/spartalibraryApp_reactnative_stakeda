@@ -120,11 +120,7 @@ export default function Main() {
     );
   };
 
-
-
   // ButtonNavigationの表示
-
-
   const BookRoute = () => (
     <SafeAreaView style={styles.container}>
       {isLoading ? loadingView : null}
